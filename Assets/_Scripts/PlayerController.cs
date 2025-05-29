@@ -3,14 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     [SerializeField] private float speed;
     private Vector2 input;
     private bool isMoving;
+    private Animator _animator;
+
+
+    void Awake()
+    {
+        _animator = GetComponent<Animator>();
+    }
     
-
-
     void Update()
     {
         if (!isMoving)
@@ -26,6 +32,9 @@ public class PlayerController : MonoBehaviour
 
             if (input != Vector2.zero)
             {
+                _animator.SetFloat("Move X", input.x);
+                _animator.SetFloat("Move Y", input.y);
+
                 var targetPosition = transform.position;
 
                 targetPosition.x += input.x;
@@ -34,8 +43,8 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(MoveTowards(targetPosition));
             }
         }
-        
-        
+
+
     }
 
     IEnumerator MoveTowards(Vector3 destination)

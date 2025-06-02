@@ -43,10 +43,12 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(MoveTowards(targetPosition));
             }
         }
-
-
     }
 
+    void LateUpdate()
+    {
+        _animator.SetBool("isMoving", isMoving);
+    }
     IEnumerator MoveTowards(Vector3 destination)
     {
         isMoving = true;
